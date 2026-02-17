@@ -1,12 +1,10 @@
-FROM tomcat:9.0-jdk17-temurin
+FROM eclipse-temurin:11-jdk-alpine
 
-# Remove default applications
-RUN rm -rf /usr/local/tomcat/webapps/*
+WORKDIR /app
 
-# Copy your WAR file
-COPY target/database_service_project.war /usr/local/tomcat/webapps/ROOT.war
+COPY target/database_service_project.jar app.jar
 
 EXPOSE 8080
 
-CMD ["catalina.sh", "run"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
 
