@@ -1,11 +1,12 @@
-FROM adoptopenjdk/openjdk11
-  
+FROM tomcat:9.0-jdk17-temurin
+
+# Remove default applications
+RUN rm -rf /usr/local/tomcat/webapps/*
+
+# Copy your WAR file
+COPY target/database_service_project.war /usr/local/tomcat/webapps/ROOT.war
+
 EXPOSE 8080
- 
-ENV APP_HOME /usr/src/app
 
-COPY target/*.jar $APP_HOME/app.jar
+CMD ["catalina.sh", "run"]
 
-WORKDIR $APP_HOME
-
-CMD ["java", "-jar", "app.jar"]
